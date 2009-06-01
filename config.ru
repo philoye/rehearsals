@@ -5,9 +5,10 @@ disable :run
  
 # we're in dev mode
 set :environment, :development
- 
+
+require File.join(File.dirname(__FILE__), 'rehearsals.rb')
 map "/" do
-  haml
+  run Rehearsals
 end
 
 require File.join(File.dirname(__FILE__), '../projectname.rb')
@@ -15,17 +16,25 @@ map "/latest/" do
   run Projectname
 end
 
-tags = ["1","2"] # In the real world, we'll use grit to get the tags or just inspect the items in the 'releases' directory that are cap'ed over.
-tags.each do |tag|
-  eval <<-CODE
-    class Version#{tag}
-      #{File.read("#{File.expand_path(File.dirname(__FILE__))}/tags/#{tag}/projectname.rb")}
-      Projectname::set :public, File.join(File.expand_path(File.dirname(__FILE__)),'/tags/#{tag}/public')
-      Projectname::set :views, File.join(File.expand_path(File.dirname(__FILE__)),'/tags/#{tag}/views')
-    end
-  CODE
-  map "/v#{tag}/" do
-    eval "run Version#{tag}::Projectname"
+tags = []
+Dir.foreach(File.join(File.dirname(__FILE__),"tags")) do |item|
+  unless ['.','..','.DS_Store'].include?(item)
+    tags << item
   end
 end
+
+tags.each_with_index do |tag,index|
+  safe_tag = tag.gsub(/\s+/,'-').gsub(/[^\.A-Za-z0-9-]/,'')
+  eval <<-CODE
+    class Tag#{index}
+      #{File.read("#{File.expand_path(File.dirname(__FILE__))}/tags/#{safe_tag}/projectname.rb")}
+      Projectname::set :public, File.join(File.expand_path(File.dirname(__FILE__)),'/tags/#{safe_tag}/public')
+      Projectname::set :views, File.join(File.expand_path(File.dirname(__FILE__)),'/tags/#{safe_tag}/views')
+    end
+  CODE
+  map "/version/#{tag}/" do
+    eval "run Tag#{index}::Projectname"
+  end
+end
+
 
