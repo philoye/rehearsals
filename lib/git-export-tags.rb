@@ -1,19 +1,37 @@
 require 'rubygems'
+require 'fileutils'
 require 'grit'
 include Grit
 
-root  = File.dirname(__FILE__)
-# tag_path = File.expand_path(File.join(root, "../tags"))
-repo_path = File.join(root, '../../.git')
-repo = Repo.new(repo_path)
-
-
-repo.tags.each do |tag|
-  puts repo.tags.name
-  puts repo.tags.message
-  `cd #{tag_dir}`
-  `git clone #{repo_path} #{tag}`
-  Dir.chdir(tag) do
-    `git reset --hard #{tag}`
+class GitExportTags
+  
+  def initialize(path_to_repo)
+    @path_to_repo = path_to_repo
+    @repo = Repo.new(path_to_repo)
+    @tags_dir = File.join(File.expand_path(File.dirname(__FILE__)),'tags')
+    
+    self.clobber_tag_checkouts
+    self.prepare_tag_directory
+    self.checkout_tags
   end
-end  
+  def prepare_tag_directory
+    FileUtils.mkdir_p @tags_dir
+  end
+  def clobber_tag_checkouts
+    FileUtils.rm_rf @tags_dir
+  end
+  def checkout_tags
+    @repo.tags.each do |tag|
+      `git clone #{@path_to_repo} #{@tags_dir}/#{tag.name}`
+      Dir.chdir("#{@tags_dir}/#{tag.name}") do
+        `git reset --hard #{tag.name}`
+      end
+    end  
+  end
+  def update_tag_checkouts
+
+  end
+
+end
+
+GitExportTags.new('../../.git')
