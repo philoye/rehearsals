@@ -1,4 +1,6 @@
 require 'sinatra'
+
+require "#{File.join(File.dirname(__FILE__),'lib','git-export-tags.rb')}"
  
 # disable sinatra's auto-application starting
 disable :run
@@ -15,6 +17,8 @@ require File.join(File.dirname(__FILE__), '../projectname.rb')
 map "/latest/" do
   run Projectname
 end
+
+# tags = GitExportTags.new("../.git").tags
 
 tags = []
 Dir.foreach(File.join(File.dirname(__FILE__),"lib/tags")) do |item|

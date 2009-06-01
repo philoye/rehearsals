@@ -1,0 +1,48 @@
+body {
+  background-color: #333;
+  color: #999;
+  padding: 24px 24px;
+}
+h1 {
+  font-size: 96px;
+  margin: 0;
+  padding: 0;
+  font-family: HelveticaNeue-UltraLight, Helvetica, sans-serif;
+  font-weight: normal;
+}
+p {
+  font-size: 48px;
+  margin: 0;
+  padding: 0;
+  font-family: HelveticaNeue-UltraLight, Helvetica, sans-serif;
+}
+table {
+  font-family: HelveticaNeue-Light, Helvetica, sans-serif;
+  margin-top: 12px;
+  font-size: 24px;
+  width: 100%;
+  border-top: 3px solid #ccc;
+}
+thead th, thead td {
+  padding: 10px 0;
+  border-bottom: 2px solid #ccc;
+  color: #fff;
+  font-family: HelveticaNeue-Light, Helvetica, sans-serif;
+}
+tbody th, tbody td {
+  padding: 10px 0;
+  border-bottom: 2px solid #666;
+  vertical-align: top;
+}
+table th {
+  text-align: left;
+  font-weight: normal;
+  padding-right: 24px;
+}
+a {
+  color: #f33;
+  text-decoration: none;
+}
+a:hover {
+  border-bottom: 1px solid #f33;
+}

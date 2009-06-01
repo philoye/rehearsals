@@ -14,6 +14,9 @@ class GitExportTags
     self.prepare_tag_directory
     self.checkout_tags
   end
+  def tags
+    @repo.tags
+  end
   def prepare_tag_directory
     FileUtils.mkdir_p @tags_dir
   end
@@ -28,10 +31,5 @@ class GitExportTags
       end
     end  
   end
-  def update_tag_checkouts
-
-  end
 
 end
-
-GitExportTags.new('../../.git')

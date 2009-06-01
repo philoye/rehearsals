@@ -1,11 +1,7 @@
-namespace :tags do 
+require "#{File.join(File.dirname(__FILE__),'lib','git-export-tags.rb')}"
 
-  task :update do
-    puts "Cloning git repo"
-  end
-
-  task :clobber do
-    puts "Blowing away all the tags"
-  end
-
+task :update_tags do
+  puts "Removing all tag checkouts"
+  puts "About to clone, checkout, and reset to tag."
+  GitExportTags.new('../.git')
 end
