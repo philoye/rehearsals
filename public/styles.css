@@ -21,17 +21,17 @@ table {
   margin-top: 12px;
   font-size: 24px;
   width: 100%;
-  border-top: 3px solid #ccc;
+  border-top: 1px solid #ccc;
 }
 thead th, thead td {
   padding: 10px 0;
-  border-bottom: 2px solid #ccc;
+  border-bottom: 1px solid #ccc;
   color: #fff;
   font-family: HelveticaNeue-Light, Helvetica, sans-serif;
 }
 tbody th, tbody td {
   padding: 10px 0;
-  border-bottom: 2px solid #666;
+  border-bottom: 1px solid #666;
   vertical-align: top;
 }
 table th {
