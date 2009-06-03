@@ -15,8 +15,6 @@ class GitTags
 
     @path_to_repo = path_to_repo
     @repo = Repo.new(path_to_repo)
-    
-    # self.checkout_tags
   end
   def tags
     @repo.tags
