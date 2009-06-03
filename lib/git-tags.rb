@@ -3,12 +3,11 @@ require 'fileutils'
 require 'grit'
 include Grit
 
-class GitExportTags
+class GitTags
 
   attr_reader :tags_dir,
               :path_to_repo,
               :repo
-
 
   def initialize(path_to_repo)
     @tags_dir = File.join(File.expand_path(File.dirname(__FILE__)),'tags')
@@ -17,15 +16,15 @@ class GitExportTags
     @path_to_repo = path_to_repo
     @repo = Repo.new(path_to_repo)
     
-    self.checkout_tags
+    # self.checkout_tags
   end
   def tags
     @repo.tags
   end
-  def clobber_tag_checkouts
+  def clobber_export
     FileUtils.rm_rf @tags_dir
   end
-  def checkout_tags
+  def export
     @repo.tags.each do |tag|
       unless File.directory? "#{@tags_dir}/#{tag.name}" 
         `git clone #{@path_to_repo} #{@tags_dir}/#{tag.name}`
@@ -34,10 +33,11 @@ class GitExportTags
         end
       end
     end  
+    return @repo
   end
-  def tags_from_dir
+  def read_tags_from_dir
     tags = []
-    Dir.foreach(File.join(File.dirname(__FILE__),'tags')) do |item|
+    Dir.foreach(@tags_dir) do |item|
       unless ['.','..','.DS_Store'].include?(item)
         tags << item
       end

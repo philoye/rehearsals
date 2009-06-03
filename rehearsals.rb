@@ -7,10 +7,10 @@ class Rehearsals < Sinatra::Base
   set :public, File.join(File.expand_path(File.dirname(__FILE__)),'public')
   set :views, File.join(File.expand_path(File.dirname(__FILE__)),'views')
 
-  require "#{File.join(File.dirname(__FILE__),'lib','git-export-tags.rb')}"
+  require "#{File.join(File.dirname(__FILE__),'lib','git-tags.rb')}"
   
   get '/' do
-    @tags = GitExportTags.new('../.git').tags
+    @tags = GitTags.new('../.git').export.tags
     haml :index 
   end
 

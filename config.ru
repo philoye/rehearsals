@@ -1,5 +1,5 @@
 require 'sinatra'
-require "#{File.join(File.dirname(__FILE__),'lib','git-export-tags.rb')}"
+require "#{File.join(File.dirname(__FILE__),'lib','git-tags.rb')}"
  
 # disable sinatra's auto-application starting
 disable :run
@@ -17,7 +17,8 @@ map "/latest/" do
   run Projectname
 end
 
-tags = GitExportTags.new('../.git').tags
+tags = GitTags.new('../.git').export.tags
+
 tags.each_with_index do |tag,index|
   eval <<-CODE
     class Tag#{index}
