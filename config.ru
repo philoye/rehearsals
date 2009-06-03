@@ -1,5 +1,4 @@
 require 'sinatra'
-
 require "#{File.join(File.dirname(__FILE__),'lib','git-export-tags.rb')}"
  
 # disable sinatra's auto-application starting
@@ -18,25 +17,17 @@ map "/latest/" do
   run Projectname
 end
 
-# tags = GitExportTags.new("../.git").tags
-
-tags = []
-Dir.foreach(File.join(File.dirname(__FILE__),"lib/tags")) do |item|
-  unless ['.','..','.DS_Store'].include?(item)
-    tags << item
-  end
-end
-
+tags = GitExportTags.new('../.git').tags
 tags.each_with_index do |tag,index|
-  safe_tag = tag.gsub(/\s+/,'-').gsub(/[^\.A-Za-z0-9-]/,'')
   eval <<-CODE
     class Tag#{index}
-      #{File.read("#{File.expand_path(File.dirname(__FILE__))}/lib/tags/#{safe_tag}/projectname.rb")}
-      Projectname::set :public, File.join(File.expand_path(File.dirname(__FILE__)),'lib/tags/#{safe_tag}/public')
-      Projectname::set :views, File.join(File.expand_path(File.dirname(__FILE__)),'lib/tags/#{safe_tag}/views')
+      #{File.read("#{File.expand_path(File.dirname(__FILE__))}/lib/tags/#{tag.name}/projectname.rb")}
+      Projectname::set :public, File.join(File.expand_path(File.dirname(__FILE__)),'lib/tags/#{tag.name}/public')
+      Projectname::set :views, File.join(File.expand_path(File.dirname(__FILE__)),'lib/tags/#{tag.name}/views')
     end
   CODE
-  map "/tags/#{tag}/" do
+  safe_tag = tag.name.gsub(/\s+/,'-').gsub(/[^\.A-Za-z0-9-]/,'')
+  map "/tags/#{safe_tag}/" do
     eval "run Tag#{index}::Projectname"
   end
 end
