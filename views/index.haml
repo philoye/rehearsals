@@ -7,20 +7,21 @@
     %link{:href => "styles.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
     
   %body
-    %h1 Version history
+    %h1 Application history
     
     %table{:cellspacing => 0}
       %col{:width => "20%"}
       %col{:width => "80%"}
       %thead
         %tr
-          %th Tag
-          %td Message
+          %th Version
+          %td Notes
       %tbody
         %tr
           %th
-            %a{:href => "latest/"} Master
+            %a{:href => "latest/"} Latest
           %td 
+            The bleeding edge…
 
       - for tag in @tags.reverse!
         %tr
