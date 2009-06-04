@@ -3,10 +3,6 @@ require 'fileutils'
 
 class GitTags
 
-  attr_reader :tags_dir,
-              :path_to_repo,
-              :repo
-
   def initialize(path_to_repo)
     @path_to_repo = path_to_repo
     @tags_dir = File.join(File.expand_path(File.dirname(__FILE__)),'tags')
