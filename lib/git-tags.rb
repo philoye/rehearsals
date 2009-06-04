@@ -19,14 +19,11 @@ class GitTags
     lines.each do |line|
       h = {}
       t = line.split(/\s+/,2)
-      h["name"] = t[0].to_s
-      h["message"] = t[1].to_s
+      h["name"] = t[0]
+      h["message"] = t[1]
       tagArray << h
     end
     return tagArray
-  end
-  def clobber_export
-    FileUtils.rm_rf @tags_dir
   end
   def export
     tags.each do |tag|
@@ -38,6 +35,10 @@ class GitTags
       end
     end
   end
+  def clobber_export
+    FileUtils.rm_rf @tags_dir
+  end
+  # Don't need this anymore, but keeping it for posterity.
   def read_tags_from_dir
     tags = []
     Dir.foreach(@tags_dir) do |item|
