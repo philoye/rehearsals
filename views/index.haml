@@ -25,7 +25,7 @@
       - for tag in @tags.reverse!
         %tr
           %th
-            %a{:href => "tags/#{tag.name}/"}
-              = tag.name
+            %a{:href => "tags/#{tag['name']}/"}
+              = tag['name']
           %td 
-            = tag.commit.message
+            = tag['message']

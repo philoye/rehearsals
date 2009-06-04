@@ -7,4 +7,7 @@ namespace :tags do
   task :clobber do
     GitTags.new('../.git').clobber_export
   end
+  task :test do
+    GitTags.new('../.git').tags
+  end
 end

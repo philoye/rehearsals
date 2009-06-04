@@ -10,7 +10,7 @@ class Rehearsals < Sinatra::Base
   require "#{File.join(File.dirname(__FILE__),'lib','git-tags.rb')}"
   
   get '/' do
-    @tags = GitTags.new('../.git').export.tags
+    @tags = GitTags.new('../.git').export
     haml :index 
   end
 

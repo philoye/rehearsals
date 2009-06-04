@@ -17,17 +17,17 @@ map "/latest/" do
   run Projectname
 end
 
-tags = GitTags.new('../.git').export.tags
-
+tagset = GitTags.new('../.git')
+tags = tagset.export
 tags.each_with_index do |tag,index|
   eval <<-CODE
     class Tag#{index}
-      #{File.read("#{File.expand_path(File.dirname(__FILE__))}/lib/tags/#{tag.name}/projectname.rb")}
-      Projectname::set :public, File.join(File.expand_path(File.dirname(__FILE__)),'lib/tags/#{tag.name}/public')
-      Projectname::set :views, File.join(File.expand_path(File.dirname(__FILE__)),'lib/tags/#{tag.name}/views')
+      #{File.read("#{File.expand_path(File.dirname(__FILE__))}/lib/tags/#{tag['name']}/projectname.rb")}
+      Projectname::set :public, File.join(File.expand_path(File.dirname(__FILE__)),'lib/tags/#{tag['name']}/public')
+      Projectname::set :views, File.join(File.expand_path(File.dirname(__FILE__)),'lib/tags/#{tag['name']}/views')
     end
   CODE
-  safe_tag = tag.name.gsub(/\s+/,'-').gsub(/[^\.A-Za-z0-9-]/,'')
+  safe_tag = tag['name'].gsub(/\s+/,'-').gsub(/[^\.A-Za-z0-9-]/,'')
   map "/tags/#{safe_tag}/" do
     eval "run Tag#{index}::Projectname"
   end
