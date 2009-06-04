@@ -38,15 +38,5 @@ class GitTags
   def clobber_export
     FileUtils.rm_rf @tags_dir
   end
-  # Don't need this anymore, but keeping it for posterity.
-  def read_tags_from_dir
-    tags = []
-    Dir.foreach(@tags_dir) do |item|
-      unless ['.','..','.DS_Store'].include?(item)
-        tags << item
-      end
-    end
-    return tags
-  end
 
 end
