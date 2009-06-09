@@ -11,3 +11,7 @@ Just drop in `rehearsals` into your app, change all references to "Projectname" 
 Don't forget that git tags can take a message:
 
     git tag tagname -m "Your tag message"
+    
+TODO:
+  *  Move your application filename/class name into a yml file rather than making people hack files.
+  *  We should grab the latest commit message for master.
