@@ -16,19 +16,21 @@ require File.join(File.dirname(__FILE__), '../projectname.rb')
 map "/latest/" do
   Projectname::Application::set :public, File.join(File.expand_path(File.dirname(__FILE__)),'../public')
   Projectname::Application::set :views, File.join(File.expand_path(File.dirname(__FILE__)),'../views')
+  Projectname::Application::set :site_root, '/latest/'
   run Projectname::Application
 end
 
 tags = GitTags.export_tags
 tags.each_with_index do |tag,index|
+  safe_tag = tag['name'].gsub(/\s+/,'-').gsub(/[^\.A-Za-z0-9-]/,'')
   eval <<-CODE
     module Tag#{index}
       #{File.read("#{File.expand_path(File.dirname(__FILE__))}/lib/tags/#{tag['name']}/projectname.rb")}
       Projectname::Application::set :public, File.join(File.expand_path(File.dirname(__FILE__)),'lib/tags/#{tag['name']}/public')
       Projectname::Application::set :views, File.join(File.expand_path(File.dirname(__FILE__)),'lib/tags/#{tag['name']}/views')
+      Projectname::Application::set :site_root, '/tags/#{safe_tag}/'
     end
   CODE
-  safe_tag = tag['name'].gsub(/\s+/,'-').gsub(/[^\.A-Za-z0-9-]/,'')
   map "/tags/#{safe_tag}/" do
     eval "run Tag#{index}::Projectname::Application"
   end
