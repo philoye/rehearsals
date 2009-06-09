@@ -13,11 +13,23 @@ map "/" do
 end
 
 require File.join(File.dirname(__FILE__), '../projectname.rb')
-map "/latest/" do
+map "/head/" do
   Projectname::Application::set :public, File.join(File.expand_path(File.dirname(__FILE__)),'../public')
   Projectname::Application::set :views, File.join(File.expand_path(File.dirname(__FILE__)),'../views')
-  Projectname::Application::set :site_root, '/latest/'
+  Projectname::Application::set :site_root, '/head/'
   run Projectname::Application
+end
+
+eval <<-CODE
+  module Master
+    #{File.read("#{File.expand_path(File.dirname(__FILE__))}/lib/tags/master/projectname.rb")}
+    Projectname::Application::set :public, File.join(File.expand_path(File.dirname(__FILE__)),'lib/tags/master/public')
+    Projectname::Application::set :views, File.join(File.expand_path(File.dirname(__FILE__)),'lib/tags/master/views')
+    Projectname::Application::set :site_root, '/master/'
+  end
+CODE
+map "/master/" do
+  run Master::Projectname::Application
 end
 
 tags = GitTags.export_tags

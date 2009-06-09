@@ -7,6 +7,7 @@ module GitTags
     path_to_repo = File.join(File.expand_path('../..',File.dirname(__FILE__)))
     tags_dir = File.join(File.expand_path(File.dirname(__FILE__)),'tags')
     FileUtils.mkdir_p tags_dir
+    update_master(tags_dir,path_to_repo)
     export(tags_dir,path_to_repo)
     return tags
   end
@@ -22,6 +23,15 @@ module GitTags
       tags << h
     end
     return tags
+  end
+  def self.update_master(tags_dir,path_to_repo)
+    unless File.directory? "#{tags_dir}/master"
+      `git clone #{path_to_repo} #{tags_dir}/master`
+    end
+    Dir.chdir("#{tags_dir}/master") do
+      `git pull origin master --quiet`
+      `git reset --hard master`
+    end
   end
   def self.export(tags_dir,path_to_repo)
     tags.each do |tag|

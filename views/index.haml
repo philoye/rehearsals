@@ -19,14 +19,18 @@
       %tbody
         %tr
           %th
-            %a{:href => "latest/"} Latest
+            %a{:href => "/head/"} Head
           %td 
-            The bleeding edge…
+
+        %tr
+          %th
+            %a{:href => "/master/"} Master
+          %td 
 
       - for tag in @tags.reverse!
         %tr
           %th
-            %a{:href => "tags/#{tag['name']}/"}
+            %a{:href => "/tags/#{tag['name']}/"}
               = tag['name']
           %td 
             = tag['message']
