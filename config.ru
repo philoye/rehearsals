@@ -14,6 +14,8 @@ end
 
 require File.join(File.dirname(__FILE__), '../projectname.rb')
 map "/latest/" do
+  Projectname::Application::set :public, File.join(File.expand_path(File.dirname(__FILE__)),'../public')
+  Projectname::Application::set :views, File.join(File.expand_path(File.dirname(__FILE__)),'../views')
   run Projectname::Application
 end
 
