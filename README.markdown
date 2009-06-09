@@ -2,7 +2,7 @@ Rehearsals
 ==========
 Rehearsals is a Sinatra application that lets you run multiple versions (actually your tags in git) of your application simultaneously. 
 
-Just drop in `rehearsals` into your app, change all references to "Projectname" with your application name, and run it:
+Just drop in `rehearsals` into your app, change all references to "Projectname" with your application class, change "projectname.rb" with your program's filename, and run it:
 
     cd rehearsals
     shotgun
