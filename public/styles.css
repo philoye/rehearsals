@@ -4,17 +4,11 @@ body {
   padding: 24px 24px;
 }
 h1 {
-  font-size: 96px;
+  font-size: 72px;
   margin: 0;
   padding: 0;
   font-family: HelveticaNeue-UltraLight, Helvetica, sans-serif;
   font-weight: normal;
-}
-p {
-  font-size: 48px;
-  margin: 0;
-  padding: 0;
-  font-family: HelveticaNeue-UltraLight, Helvetica, sans-serif;
 }
 table {
   font-family: HelveticaNeue-Light, Helvetica, sans-serif;
