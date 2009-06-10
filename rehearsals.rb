@@ -11,6 +11,7 @@ module Rehearsals
 
     get '/' do
       @tags = GitTags.export_tags
+      @environment = ENV['RACK_ENV']
       haml :index 
     end
 

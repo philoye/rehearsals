@@ -17,11 +17,12 @@
           %th Version
           %td Notes
       %tbody
+      
+      - if @environment == 'development'
         %tr
           %th
             %a{:href => "/head/"} Head
           %td 
-
         %tr
           %th
             %a{:href => "/master/"} Master
