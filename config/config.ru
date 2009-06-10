@@ -37,7 +37,7 @@ end
 # We don't want to show head/master in production
 if ENV['RACK_ENV'] == 'development'
 
-  # Serve the curent version of the app, i.e, HEAD in git
+  # Serve the curent version of the app (i.e., HEAD)
   require File.join(__ROOT__, '..',AppFile)
   map "/head/" do
     eval(AppName)::Application::set :public, File.join(__ROOT__,'../public')
