@@ -10,7 +10,7 @@ module Rehearsals
     set :views, File.join(File.expand_path(File.dirname(__FILE__)),'views')
 
     get '/' do
-      @tags = GitTags.export_tags
+      @tags = GitTags.tags
       @environment = ENV['RACK_ENV']
       haml :index 
     end

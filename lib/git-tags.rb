@@ -10,10 +10,9 @@ module GitTags
     FileUtils.mkdir_p @tags_dir
     update_master
     update_tags
-    return tags
   end
   def self.tags
-    tags = []
+    tags_list = []
     text = `cd #{@path_to_repo} && git tag -n`
     lines = text.split("\n")
     lines.each do |line|
@@ -21,9 +20,9 @@ module GitTags
       t = line.split(/\s+/,2)
       h["name"] = t[0]
       h["message"] = t[1]
-      tags << h
+      tags_list << h
     end
-    return tags
+    return tags_list
   end
   def self.update_master
     unless File.directory? "#{@tags_dir}/master"
