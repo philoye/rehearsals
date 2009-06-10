@@ -1,10 +1,10 @@
 namespace :tags do 
-  require "#{File.join(File.dirname(__FILE__),'lib','git-tags.rb')}"
+  require "#{File.join(File.dirname(__FILE__),'lib','git_export.rb')}"
 
   task :export do
-    GitTags.export_tags
+    GitExport.export_tags
   end
   task :clobber do
-    GitTags.clobber_export
+    GitExport.clobber_export
   end
 end

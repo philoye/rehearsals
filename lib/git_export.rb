@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'fileutils'
 
-module GitTags
+module GitExport
 
   @path_to_repo = File.join(File.expand_path('../..',File.dirname(__FILE__)))
   @tags_dir = File.join(File.expand_path(File.dirname(__FILE__)),'tags')

@@ -1,7 +1,7 @@
 __ROOT__ = File.expand_path(File.join(File.dirname(__FILE__),'../'))
 
 require 'sinatra'
-require File.join(__ROOT__,'lib','git-tags.rb')
+require File.join(__ROOT__,'lib','git_export.rb')
 
 begin
   config = YAML.load(File.read("#{__ROOT__}/config/application.yml"))
@@ -18,7 +18,7 @@ map "/" do
 end
 
 # Read in all tagged versions, eval them, overwrite the public/views directories and serve them up.
-tags = GitTags.export_tags
+tags = GitExport.export_tags
 tags.each_with_index do |tag,index|
   safe_tag = tag['name'].gsub(/\s+/,'-').gsub(/[^\.A-Za-z0-9-]/,'')
   eval <<-CODE

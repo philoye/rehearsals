@@ -1,6 +1,6 @@
 require 'sinatra/base'
 require 'haml'
-require "#{File.join(File.dirname(__FILE__),'lib','git-tags.rb')}"
+require "#{File.join(File.dirname(__FILE__),'lib','git_export.rb')}"
 
 module Rehearsals
   class Application < Sinatra::Base
@@ -10,7 +10,7 @@ module Rehearsals
     set :views, File.join(File.expand_path(File.dirname(__FILE__)),'views')
 
     get '/' do
-      @tags = GitTags.tags
+      @tags = GitExport.tags
       @environment = ENV['RACK_ENV']
       haml :index 
     end
